@@ -1,21 +1,39 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+<img width="1200" height="475" alt="Desk Calendar Banner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+
+# 📅 Customisable Desk Calendar
+
+A premium, high-fidelity Android calendar application featuring interactive event tracking, customisable desktop widgets, rich animations, and an integrated real-time widget simulator. 
+
 </div>
 
-# Run and deploy your AI Studio app
+---
 
-This contains everything you need to run your app locally.
+## 🌟 Key Features
 
-View your app in AI Studio: https://ai.studio/apps/b9c3cc7a-8c60-4bcd-940f-488943011a79
+### 1. 📅 Interactive Desk Calendar
+* **Month Paging**: A high-performance horizontal swipe interface supporting infinite month transitions.
+* **Cinematic Scrolling**: Tapping **"Today"** triggers an organic, multi-step sequential page-slide back to the current month rather than a sudden snap, creating a premium visual effect.
+* **Day Highlight**: Displays the selected date at the top with clean weekday formatting.
 
-## Run Locally
+### 2. 🌗 Animated Day/Night Scenery Toggle
+* An ultra-smooth, custom tactile toggle that animates weather backgrounds:
+  * **Day Mode**: Features moving clouds and glowing yellow sunbeam rings.
+  * **Night Mode**: Features twinkling stars, sliding craters, and soft concentric moonbeams.
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+---
 
+## 🚀 Installation
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
+Simply install the pre-compiled APK directly onto your Android device:
+
+1. Download or transfer the `Calendar.apk` file to your Android device.
+2. Locate and open the APK file using a file manager.
+3. Follow the system prompts to install the application (enable installation from unknown sources if requested).
+4. Open the application from your app drawer.
+
+---
+
+<div align="center">
+  <sub>Developed as an interactive AI Studio app. View the original app setup <a href="https://ai.studio/apps/b9c3cc7a-8c60-4bcd-940f-488943011a79">here</a>.</sub>
+</div>
