@@ -7,45 +7,56 @@
     android:background="@drawable/widget_bg_shape"
     android:padding="12dp">
 
-    <!-- Top Header: Centered Month Title overlaying invisible left/right click-switch touch targets -->
-    <FrameLayout
+    <!-- Top Header -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:layout_marginBottom="8dp">
 
         <TextView
             android:id="@+id/widget_month_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="August 2024"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:letterSpacing="-0.02"
             android:textColor="#111111"
-            android:gravity="center"
-            android:padding="8dp" />
+            android:gravity="start|center_vertical"
+            android:padding="4dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/widget_today_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif"
+            android:textColor="#007AFF"
+            android:padding="8dp"
+            android:visibility="gone" />
 
-            <View
-                android:id="@+id/btn_prev_month"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true" />
+        <ImageView
+            android:id="@+id/btn_prev_month"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_chevron_left"
+            android:padding="8dp"
+            android:contentDescription="Previous Month" />
 
-            <View
-                android:id="@+id/btn_next_month"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true" />
-        </LinearLayout>
-    </FrameLayout>
+        <ImageView
+            android:id="@+id/btn_next_month"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_chevron_right"
+            android:padding="8dp"
+            android:contentDescription="Next Month" />
+    </LinearLayout>
 
     <!-- Week Days Headers -->
     <LinearLayout

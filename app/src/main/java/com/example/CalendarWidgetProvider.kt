@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
+import com.example.data.GridDay
 import com.example.data.WidgetSettings
 import com.example.data.WidgetTheme
 import java.time.LocalDate
@@ -50,6 +51,11 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                     val appWidgetManager = AppWidgetManager.getInstance(context)
                     updateAppWidget(context, appWidgetManager, appWidgetId)
                 }
+                ACTION_TODAY -> {
+                    WidgetSettings.setWidgetMonthOffset(context, appWidgetId, 0)
+                    val appWidgetManager = AppWidgetManager.getInstance(context)
+                    updateAppWidget(context, appWidgetManager, appWidgetId)
+                }
             }
         } else if (action == ACTION_UPDATE_ALL_WIDGETS || action == Intent.ACTION_TIME_CHANGED || action == Intent.ACTION_DATE_CHANGED) {
             // Update all widgets
@@ -65,6 +71,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
     companion object {
         const val ACTION_PREV_MONTH = "com.example.calendarplus.ACTION_PREV_MONTH"
         const val ACTION_NEXT_MONTH = "com.example.calendarplus.ACTION_NEXT_MONTH"
+        const val ACTION_TODAY = "com.example.calendarplus.ACTION_TODAY"
         const val ACTION_UPDATE_ALL_WIDGETS = "com.example.calendarplus.ACTION_UPDATE_ALL_WIDGETS"
 
         fun triggerAllWidgetsUpdate(context: Context) {
@@ -79,6 +86,11 @@ class CalendarWidgetProvider : AppWidgetProvider() {
         }
 
         fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+            val views = buildWidgetViews(context, appWidgetId)
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
+
+        fun buildWidgetViews(context: Context, appWidgetId: Int): RemoteViews {
             val views = RemoteViews(context.packageName, R.layout.calendar_widget_layout)
 
             // 1. Read preference configurations
@@ -86,7 +98,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             val theme = WidgetSettings.getTheme(context)
             val transparency = WidgetSettings.getTransparency(context)
             val firstDayOfWeek = WidgetSettings.getFirstDayOfWeek(context) // 1 = Monday, 7 = Sunday
-            val offset = WidgetSettings.getWidgetMonthOffset(context, appWidgetId)
+            val offset = if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) WidgetSettings.getWidgetMonthOffset(context, appWidgetId) else 0
 
             // 2. Setup Background Theme and Transparency
             val bgResource = if (isDark) R.drawable.widget_bg_dark else R.drawable.widget_bg_light
@@ -99,6 +111,17 @@ class CalendarWidgetProvider : AppWidgetProvider() {
             val textColorMuted = if (isDark) Color.parseColor("#444446") else Color.parseColor("#C7C7CC")
 
             views.setTextColor(R.id.widget_month_title, textColorPrimary)
+            
+            // Set chevron resources based on theme
+            views.setImageViewResource(R.id.btn_prev_month, if (isDark) R.drawable.ic_chevron_left_white else R.drawable.ic_chevron_left)
+            views.setImageViewResource(R.id.btn_next_month, if (isDark) R.drawable.ic_chevron_right_white else R.drawable.ic_chevron_right)
+            
+            // Handle 'Today' button visibility
+            if (offset != 0) {
+                views.setViewVisibility(R.id.widget_today_btn, View.VISIBLE)
+            } else {
+                views.setViewVisibility(R.id.widget_today_btn, View.GONE)
+            }
 
             // Update weekday headers based on first day starting choice
             val headers = if (firstDayOfWeek == 1) {
@@ -223,7 +246,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 context,
                 appWidgetId * 10 + 1,
                 intentPrev,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.btn_prev_month, pendingPrev)
 
@@ -236,7 +259,7 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 context,
                 appWidgetId * 10 + 2,
                 intentNext,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.btn_next_month, pendingNext)
 
@@ -251,15 +274,25 @@ class CalendarWidgetProvider : AppWidgetProvider() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.widget_month_title, pendingOpen)
+            
+            // Today Button Intent
+            val intentToday = Intent(context, CalendarWidgetProvider::class.java).apply {
+                action = ACTION_TODAY
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            }
+            val pendingToday = PendingIntent.getBroadcast(
+                context,
+                if (appWidgetId != AppWidgetManager.INVALID_APPWIDGET_ID) appWidgetId * 10 + 4 else 4,
+                intentToday,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views.setOnClickPendingIntent(R.id.widget_today_btn, pendingToday)
 
-            // Submit update
-            appWidgetManager.updateAppWidget(appWidgetId, views)
+            return views
         }
     }
 }
 
-data class GridDay(
-    val dayNumber: Int,
-    val isCurrentMonth: Boolean,
-    val localDate: java.time.LocalDate
-)
+
+
+

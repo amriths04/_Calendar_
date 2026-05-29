@@ -132,7 +132,13 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
                 val appWidgetManager = AppWidgetManager.getInstance(context)
                 val myProvider = ComponentName(context, CalendarWidgetProvider::class.java)
                 if (appWidgetManager != null && appWidgetManager.isRequestPinAppWidgetSupported) {
-                    appWidgetManager.requestPinAppWidget(myProvider, null, null)
+                    val previewBundle = android.os.Bundle().apply {
+                        val remoteViews = CalendarWidgetProvider.buildWidgetViews(context, AppWidgetManager.INVALID_APPWIDGET_ID)
+                        // If we had a mechanism to bind data, we would do it here. 
+                        // But an unbound RemoteViews works as a structural preview.
+                        putParcelable(AppWidgetManager.EXTRA_APPWIDGET_PREVIEW, remoteViews)
+                    }
+                    appWidgetManager.requestPinAppWidget(myProvider, previewBundle, null)
                 }
             }
         } catch (e: Exception) {

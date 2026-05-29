@@ -13,23 +13,23 @@ val IosLargeTitle = TextStyle(
     fontWeight = FontWeight.Bold,
     fontSize = 34.sp,
     lineHeight = 41.sp,
-    letterSpacing = 0.4.sp
+    letterSpacing = (-1.2).sp
 )
 
 val IosTitle = TextStyle(
     fontFamily = FontFamily.SansSerif,
     fontWeight = FontWeight.SemiBold,
-    fontSize = 17.sp,
-    lineHeight = 22.sp,
-    letterSpacing = (-0.43).sp
+    fontSize = 20.sp,
+    lineHeight = 25.sp,
+    letterSpacing = (-0.8).sp
 )
 
 val IosBody = TextStyle(
     fontFamily = FontFamily.SansSerif,
     fontWeight = FontWeight.Normal,
     fontSize = 17.sp,
-    lineHeight = 22.sp,
-    letterSpacing = (-0.43).sp
+    lineHeight = 24.sp,
+    letterSpacing = (-0.5).sp
 )
 
 val IosSecondary = TextStyle(
@@ -37,7 +37,7 @@ val IosSecondary = TextStyle(
     fontWeight = FontWeight.Normal,
     fontSize = 15.sp,
     lineHeight = 20.sp,
-    letterSpacing = (-0.24).sp
+    letterSpacing = (-0.3).sp
 )
 
 val IosTertiary = TextStyle(
@@ -45,7 +45,7 @@ val IosTertiary = TextStyle(
     fontWeight = FontWeight.Normal,
     fontSize = 13.sp,
     lineHeight = 18.sp,
-    letterSpacing = (-0.08).sp
+    letterSpacing = (-0.2).sp
 )
 
 val IosTabBarLabel = TextStyle(
@@ -53,13 +53,16 @@ val IosTabBarLabel = TextStyle(
     fontWeight = FontWeight.Medium,
     fontSize = 10.sp,
     lineHeight = 12.sp,
-    letterSpacing = 0.12.sp
+    letterSpacing = 0.sp
 )
 
 val Typography = Typography(
     displayLarge = IosLargeTitle,
-    headlineLarge = IosLargeTitle.copy(fontSize = 30.sp, lineHeight = 36.sp),
-    headlineMedium = IosLargeTitle.copy(fontSize = 24.sp, lineHeight = 30.sp),
+    displayMedium = IosLargeTitle.copy(fontSize = 28.sp, lineHeight = 34.sp, letterSpacing = (-1.0).sp),
+    displaySmall = IosLargeTitle.copy(fontSize = 22.sp, lineHeight = 28.sp, letterSpacing = (-0.8).sp),
+    headlineLarge = IosLargeTitle.copy(fontSize = 30.sp, lineHeight = 36.sp, letterSpacing = (-1.0).sp),
+    headlineMedium = IosLargeTitle.copy(fontSize = 24.sp, lineHeight = 30.sp, letterSpacing = (-0.9).sp),
+    headlineSmall = IosTitle,
     titleLarge = IosTitle,
     titleMedium = IosTitle.copy(fontWeight = FontWeight.Medium),
     titleSmall = IosTitle.copy(fontSize = 16.sp, fontWeight = FontWeight.Medium),

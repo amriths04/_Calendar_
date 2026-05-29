@@ -10,6 +10,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 
 private val LightColorScheme =
   lightColorScheme(
@@ -59,6 +60,22 @@ fun MyApplicationTheme(
   content: @Composable () -> Unit,
 ) {
   val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+
+  val view = LocalView.current
+  if (!view.isInEditMode) {
+    androidx.compose.runtime.SideEffect {
+      var context = view.context
+      while (context is android.content.ContextWrapper) {
+          if (context is android.app.Activity) break
+          context = context.baseContext
+      }
+      val window = (context as? android.app.Activity)?.window
+      if (window != null) {
+          androidx.core.view.WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+          androidx.core.view.WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !darkTheme
+      }
+    }
+  }
 
   MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
 }
