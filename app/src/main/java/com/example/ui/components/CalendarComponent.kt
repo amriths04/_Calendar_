@@ -29,6 +29,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.CalendarViewModel
@@ -395,6 +397,10 @@ fun MonthView(
 
         // Highly optimized index-based grid layout avoiding heavy loop allocations or repeating system clock queries
         val today = remember { LocalDate.now() }
+        val cellHorizontalPadding = ResponsiveUtil.moderateScale(1.5f)
+        val cellVerticalPadding = ResponsiveUtil.moderateScale(0.05f)
+        val cellFontSize = ResponsiveUtil.normalize(17f)
+
         for (rowIdx in 0 until numRows) {
             Row(
                 modifier = Modifier
@@ -417,6 +423,9 @@ fun MonthView(
                             isSunday = isSunday,
                             themeAccentColor = themeAccentColor,
                             onDateSelect = onDateSelect,
+                            horizontalPadding = cellHorizontalPadding,
+                            verticalPadding = cellVerticalPadding,
+                            fontSize = cellFontSize,
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -434,14 +443,17 @@ fun DayCell(
     isSunday: Boolean,
     themeAccentColor: Color,
     onDateSelect: (LocalDate) -> Unit,
+    horizontalPadding: Dp,
+    verticalPadding: Dp,
+    fontSize: TextUnit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
             .aspectRatio(1.65f) // Increased aspect ratio (reduced height) to shrink the gap between week rows
             .padding(
-                horizontal = ResponsiveUtil.moderateScale(1.5f),
-                vertical = ResponsiveUtil.moderateScale(0.05f) // Extremely tight vertical padding to reduce gaps
+                horizontal = horizontalPadding,
+                vertical = verticalPadding
             )
             .clickable(
                 interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
@@ -452,7 +464,7 @@ fun DayCell(
     ) {
         Box(
             modifier = Modifier
-                .padding(ResponsiveUtil.moderateScale(0.5f))
+                .padding(horizontalPadding / 3)
                 .aspectRatio(1f)
                 .clip(CircleShape)
                 .background(
@@ -467,7 +479,7 @@ fun DayCell(
             Text(
                 text = cellDay.dayNumber.toString(),
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    fontSize = ResponsiveUtil.normalize(17f),
+                    fontSize = fontSize,
                     fontWeight = if (isSelected || isToday) FontWeight.Bold else FontWeight.Medium
                 ),
                 color = when {

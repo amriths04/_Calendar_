@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
@@ -29,16 +30,24 @@ class CalendarViewModel(application: Application) : AndroidViewModel(application
     init {
         val database = CalendarDatabase.getDatabase(context)
         repository = CalendarRepository(database.calendarEventDao())
+
+        // Offload SharedPreferences disk reads to background I/O thread
+        viewModelScope.launch(Dispatchers.IO) {
+            isDarkMode.value = WidgetSettings.isDarkMode(context)
+            widgetTheme.value = WidgetSettings.getTheme(context)
+            widgetTransparency.value = WidgetSettings.getTransparency(context)
+            firstDayOfWeek.value = WidgetSettings.getFirstDayOfWeek(context)
+        }
     }
 
     // Current app display parameters
     val activeTab = MutableStateFlow("calendar") // "calendar" or "customise"
-    val isDarkMode = MutableStateFlow(WidgetSettings.isDarkMode(context))
+    val isDarkMode = MutableStateFlow(false) // Safe default to prevent blocking app startup
 
     // Widget specific configs
-    val widgetTheme = MutableStateFlow(WidgetSettings.getTheme(context))
-    val widgetTransparency = MutableStateFlow(WidgetSettings.getTransparency(context))
-    val firstDayOfWeek = MutableStateFlow(WidgetSettings.getFirstDayOfWeek(context))
+    val widgetTheme = MutableStateFlow(WidgetTheme.VIBRANT_PURPLE)
+    val widgetTransparency = MutableStateFlow(0)
+    val firstDayOfWeek = MutableStateFlow(1)
 
     // Active viewing Month
     val currentYearMonth = MutableStateFlow(YearMonth.now())

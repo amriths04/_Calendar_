@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.IntOffset
 
 @Composable
 fun DarkLightModeToggle(
@@ -180,7 +181,7 @@ fun DarkLightModeToggle(
         // Ring 1 (Largest, outer aura)
         Box(
             modifier = Modifier
-                .offset(x = thumbOffset - 18.dp)
+                .offset { IntOffset(x = (thumbOffset - 18.dp).roundToPx(), y = 0) }
                 .align(Alignment.CenterStart)
                 .size(66.dp)
                 .clip(CircleShape)
@@ -195,7 +196,7 @@ fun DarkLightModeToggle(
         // Ring 2 (Middle aura)
         Box(
             modifier = Modifier
-                .offset(x = thumbOffset - 9.dp)
+                .offset { IntOffset(x = (thumbOffset - 9.dp).roundToPx(), y = 0) }
                 .align(Alignment.CenterStart)
                 .size(48.dp)
                 .clip(CircleShape)
@@ -210,7 +211,7 @@ fun DarkLightModeToggle(
         // Ring 3 (Inner aura)
         Box(
             modifier = Modifier
-                .offset(x = thumbOffset - 4.dp)
+                .offset { IntOffset(x = (thumbOffset - 4.dp).roundToPx(), y = 0) }
                 .align(Alignment.CenterStart)
                 .size(38.dp)
                 .clip(CircleShape)
@@ -226,7 +227,8 @@ fun DarkLightModeToggle(
         // --- Sliding Thumb (Sun or Moon) ---
         Box(
             modifier = Modifier
-                .padding(start = thumbOffset)
+                .padding(start = 4.dp)
+                .offset { IntOffset(x = (thumbOffset - 4.dp).roundToPx(), y = 0) }
                 .align(Alignment.CenterStart)
                 .size(30.dp)
                 .clip(CircleShape)
