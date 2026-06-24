@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.CalendarViewModel
 import com.example.data.GridDay
+import com.example.ui.components.buttons.WeekStartToggle
 import com.example.util.ResponsiveUtil
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -280,6 +281,12 @@ fun CalendarComponent(
                 }
             }
         }
+
+        WeekStartToggle(
+            firstDayOfWeek = firstDayOfWeek,
+            onDaySelected = { day -> viewModel.setFirstDayOfWeek(day) },
+            modifier = Modifier.padding(top = ResponsiveUtil.verticalScale(16f))
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 
