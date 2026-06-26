@@ -28,7 +28,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -284,6 +283,7 @@ fun CalendarComponent(
 
         WeekStartToggle(
             firstDayOfWeek = firstDayOfWeek,
+            isDark = isDark,
             onDaySelected = { day -> viewModel.setFirstDayOfWeek(day) },
             modifier = Modifier.padding(top = ResponsiveUtil.verticalScale(16f))
         )
@@ -303,21 +303,21 @@ fun CalendarComponent(
             pop()
         }
         
-        ClickableText(
+        Text(
             text = annotatedText,
             style = MaterialTheme.typography.labelMedium.copy(
                 fontSize = 13.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
             ),
-            onClick = { offset ->
-                annotatedText.getStringAnnotations(tag = "URL", start = offset, end = offset)
-                    .firstOrNull()?.let { annotation ->
-                        uriHandler.openUri(annotation.item)
-                    }
-            },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(bottom = bottomInset + 90.dp)
+                .clickable {
+                    annotatedText.getStringAnnotations(tag = "URL", start = 0, end = annotatedText.length)
+                        .firstOrNull()?.let { annotation ->
+                            uriHandler.openUri(annotation.item)
+                        }
+                }
         )
     }
 }

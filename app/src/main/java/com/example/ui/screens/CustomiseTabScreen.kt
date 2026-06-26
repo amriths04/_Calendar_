@@ -21,7 +21,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.HelpOutline
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -155,7 +155,7 @@ fun CustomiseTabScreen(viewModel: CalendarViewModel) {
                         verticalAlignment = Alignment.Top
                     ) {
                         Icon(
-                            imageVector = Icons.Default.HelpOutline, // will fix to AutoMirrored if needed
+                            imageVector = Icons.AutoMirrored.Filled.HelpOutline,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier
