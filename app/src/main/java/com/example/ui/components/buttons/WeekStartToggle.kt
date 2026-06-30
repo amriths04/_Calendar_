@@ -71,7 +71,7 @@ fun WeekStartToggle(
         Box(
             modifier = Modifier
                 .clip(RoundedCornerShape(50))
-                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.15f))
+                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.25f))
                 .padding(4.dp)
                 .height(toggleHeight)
         ) {

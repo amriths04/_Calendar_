@@ -138,7 +138,7 @@ fun WidgetComponent(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(ResponsiveUtil.verticalScale(40f))
+                        .height(ResponsiveUtil.verticalScale(33f))
                         .padding(
                             start = ResponsiveUtil.moderateScale(14f),
                             end = ResponsiveUtil.moderateScale(4f)
@@ -216,7 +216,7 @@ fun WidgetComponent(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(ResponsiveUtil.verticalScale(6f)))
+                Spacer(modifier = Modifier.height(ResponsiveUtil.verticalScale(1f)))
 
                 WidgetMonthView(
                     month = currentMonth,

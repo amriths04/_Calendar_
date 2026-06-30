@@ -163,7 +163,7 @@ fun CalendarComponent(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(ResponsiveUtil.verticalScale(40f))
+                            .height(ResponsiveUtil.verticalScale(33f))
                             .padding(
                                 start = ResponsiveUtil.moderateScale(14f),
                                 end = ResponsiveUtil.moderateScale(4f)
@@ -267,7 +267,7 @@ fun CalendarComponent(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(ResponsiveUtil.verticalScale(6f)))
+                    Spacer(modifier = Modifier.height(ResponsiveUtil.verticalScale(1f)))
 
                     MonthView(
                         month = monthItem,
